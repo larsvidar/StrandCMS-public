@@ -1,5 +1,5 @@
 /***** IMPORTS *****/
-import React from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
 import { FaSpinner } from 'react-icons/fa';
 
@@ -38,13 +38,13 @@ const LoaderStyle = styled.div`
 
 
 /***** COMPONENT-FUNCTION *****/
-const Loader = () => {
+const Loader: FC = (): JSX.Element => {
     
     /*** Return-statement ***/
     return <LoaderStyle theme={{primaryColor: 'blue'}}>
-            <FaSpinner className='wheel'/>
-        </LoaderStyle>;
-}
+        <FaSpinner className='wheel'/>
+    </LoaderStyle>;
+};
 
 
 /***** EXPORTS *****/

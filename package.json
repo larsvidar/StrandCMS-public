@@ -1,18 +1,18 @@
 {
   "name": "strandcms",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "private": true,
-  "homepage": "",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --browser",
-    "eject": "react-scripts eject",
-    "postbuild": "react-snap"
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
-  "reactSnap": {},
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   },
   "browserslist": {
     "production": [
@@ -29,26 +29,29 @@
   "dependencies": {
     "@tinymce/tinymce-react": "^3.8.1",
     "bootstrap": "^4.5.3",
-    "cookie-parser": "^1.4.5",
-    "firebase": "^7.24.0",
-    "node-sass": "^4.14.1",
+    "firebase": "^8.0.1",
+    "node-sass": "^4.12.0",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.0",
     "react-dom": "^17.0.1",
+    "react-helmet": "^6.1.0",
     "react-icons": "^3.11.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "^3.4.4",
-    "styled-components": "^5.2.0",
-    "typescript": "^4.0.0"
+    "react-scripts": "^4.0.0"
   },
   "devDependencies": {
-    "@types/tinymce": "^4.6.0",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "@types/react-router-dom": "^5.1.6",
     "@types/styled-components": "^5.1.4",
-    "@types/firebase": "^3.2.1",
-    "@types/jest": "24.0.19",
+    "@types/react-helmet": "^6.1.0",
+    "@types/jest": "^26.0.15",
+    "@types/node": "^12.0.0",
     "@types/react": "^16.9.53",
     "@types/react-dom": "^16.9.8",
-    "@types/react-router-dom": "^5.1.6",
-    "react-snap": "^1.23.0"
+    "typescript": "^4.0.3",
+    "web-vitals": "^0.2.4",
+    "styled-components": "^5.2.1"
   }
 }

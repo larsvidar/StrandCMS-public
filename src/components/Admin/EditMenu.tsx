@@ -9,10 +9,6 @@ const EditMenuStyle = styled.div`
 `;
 
 
-/***** INTERFACES *****/
-interface IEditMenuProps {};
-
-
 /***** COMPONENT-FUNCTION *****/
 const EditMenu = () => {
     
@@ -22,7 +18,7 @@ const EditMenu = () => {
             <p>Here you will be able to edit.</p>
         </EditMenuStyle>
     );
-}
+};
 
 
 /***** EXPORTS *****/

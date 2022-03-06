@@ -1,11 +1,13 @@
 {
-    "firebase_config": {
-        "apiKey": "",
-        "authDomain": "",
-        "databaseURL": "",
-        "projectId": "",
-        "storageBucket": "",
-        "messagingSenderId": "",
-        "appId": ""
+    "version": "0.0.0",
+    "locale": "no",
+    "firebase": {
+        "apiKey": "YourKey",
+        "authDomain": "YourProject.firebaseapp.com",
+        "databaseURL": "https://YourProject.firebaseio.com",
+        "projectId": "YourProjectId",
+        "storageBucket": "YourProject.appspot.com",
+        "messagingSenderId": "000",
+        "appId": "YourAppId"
     }
 }

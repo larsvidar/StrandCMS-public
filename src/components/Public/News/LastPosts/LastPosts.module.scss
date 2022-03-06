@@ -1,0 +1,34 @@
+@import '../../../../styles/general.scss';
+
+.LastPosts{
+    max-width: 500px;
+
+    height: auto;
+    border: solid 1px #ddd;
+    padding: 1em;
+
+    h1 {
+        color: #666;
+        margin-bottom: 1em;
+        letter-spacing: .7px;
+    }
+
+    p {
+        color: #888;
+        margin-bottom: 1.2em;
+        font-size: 1em;
+        font-weight: 100;
+        letter-spacing: .7px;
+    }
+
+    /*** MEDIA QUERIES ***/
+    @media(max-width: 300px) {
+        h1 {
+            font-size: 8vw;
+        }
+
+        p {
+            font-size: 6vw;
+        }  
+    }
+}

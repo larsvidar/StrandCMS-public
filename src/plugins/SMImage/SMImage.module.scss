@@ -1,0 +1,48 @@
+@import '../../styles/general.scss';
+
+.SMImage {
+    --primaryColor: white;
+    --primaryText: black;
+    --fileButtonHeight: 60px;
+
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    text-align: left;
+
+    .fileButton {
+        position: relative;
+        height: var(--fileButtonHeight);
+        border: solid 1px #ccc;
+        border-radius: 8px;
+        font-size: 1.2em;
+        cursor: pointer;
+
+        &:hover {
+            border: solid 1px #888;
+        }
+
+        .fileInput {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: var(--fileButtonHeight);
+            opacity: 0;
+            overflow: hidden;
+        };
+    }
+
+    img {
+        display: inline-block;
+        padding: 0;
+        width: 100%;
+        max-height: 500px;
+        object-fit: contain;
+        margin: 15px 0;
+    }
+
+    .caption {
+        padding: .5em;
+    }
+}

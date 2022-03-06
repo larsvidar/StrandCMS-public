@@ -1,45 +1,42 @@
 /***** IMPORTS *****/
-import React, {useContext, FC} from 'react';
+import React, {useContext, useEffect, useRef} from 'react';
 import {genObject, IBaseProps} from '../../../../interfaces/IGeneral';
 import {AppContext} from '../../../../Handler/Handler';
-import styled from 'styled-components';
+import styles from './Menu.module.scss';
 import {Link} from 'react-router-dom';
-import SubMenu from './SubMenu';
-
-
-/***** STYLES *****/
-const MenuStyle = styled.div`
-    display: flex;
-    margin: 0;
-    align-items: flex-end;
-
-    .menu-link {
-        color: ${props => props.theme.primaryText};
-        padding: 1em;
-        margin: 0;
-        align-self: flex-end;
-
-        &:hover {
-            backdrop-filter: brightness(1.5);
-        }
-    }
-`;
+import SubMenu from './SubMenu/SubMenu';
+import { setTheme } from '../../../../Handler/actions/sActions';
 
 
 /***** INTERFACES *****/
 interface IMenuProps extends IBaseProps {
     baseUrl?: string,
-};
+}
 
 
 /***** COMPONENT-FUNCTION *****/
-const Menu: FC<IMenuProps> = ({baseUrl = '/', className}: IMenuProps): JSX.Element => {
+const Menu = ({baseUrl = '/', className}: IMenuProps) => {
+
+    /*** Variables ***/
+    const menuRef = useRef(null);
+    const menuClass = className
+        ? styles.Menu + ' ' + className
+        : styles.Menu;
 
     /*** Context ***/
     const context = useContext(AppContext);
     const {state} = context || {};
     const {settings, menu} = state || {};
     const {theme} = settings || {};
+
+
+    /*** Effects ***/
+
+    //Runs when theme-context updates
+    // -Sets values from theme to css.
+    useEffect(() => {
+        setTheme(theme, menuRef);
+    }, [theme]);
 
 
     /*** Program ***/
@@ -58,31 +55,30 @@ const Menu: FC<IMenuProps> = ({baseUrl = '/', className}: IMenuProps): JSX.Eleme
 
     const mapMenu = Object.entries(menuObject);
 
-
     /*** Return-statement ***/
     return(
-        <MenuStyle theme={theme} className={className}>
+        <div className={menuClass} ref={menuRef}>
             
             {/* Mapping out LI-elements */}
-            {mapMenu.map((menuEntry: Array<any>, index: number) => {
+            {mapMenu.map((menuEntry, index: number) => {
 
                 if(!Array.isArray(menuEntry[1])) { 
-                    return  <Link key={index} className='menu-link' to={menuEntry[1].url}>
+                    return  <Link key={index} className={styles.menuLink} to={menuEntry[1].url}>
                         {menuEntry[1].title}
-                    </Link>
+                    </Link>;
                 } else {
                     return <SubMenu
                         key={index}
                         baseUrl={baseUrl}
                         menu={menuEntry}
                         theme={theme}
-                    />
+                    />;
 
                 }
             })}
-        </MenuStyle>
+        </div>
     );
-}
+};
 
 
 /***** EXPORTS *****/

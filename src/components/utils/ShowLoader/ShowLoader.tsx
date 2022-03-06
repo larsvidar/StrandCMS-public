@@ -1,14 +1,10 @@
 /***** IMPORTS *****/
-import { useContext, useEffect } from 'react';
-import { AppContext } from '../../../Handler/Handler';
-
-
-/***** INTERFACES *****/
-interface IShowLoaderProps {};
+import {FC, useContext, useEffect} from 'react';
+import {AppContext} from '../../../Handler/Handler';
 
 
 /***** COMPONENT-FUNCTION *****/
-const ShowLoader = () => {
+const ShowLoader: FC = (): null => {
 
     /*** Context ***/
     const context = useContext(AppContext);
@@ -29,11 +25,11 @@ const ShowLoader = () => {
     }, [showLoader]);
 
 
-    //Cleanup. When compnent demounts, set showLoader to false.
+    //Cleanup. When component demounts, set showLoader to false.
     useEffect(() => {
         
         return () => {
-            if(setShowLoader) setShowLoader(false)
+            if(setShowLoader) setShowLoader(false);
         };
     //eslint-disable-next-line
     }, []);
@@ -41,7 +37,7 @@ const ShowLoader = () => {
 
     /*** Return-statement ***/
     return null;
-}
+};
 
 
 /***** EXPORTS *****/

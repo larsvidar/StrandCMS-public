@@ -1,0 +1,17 @@
+@import '../../../styles/general.scss';
+
+.Authorize {
+    margin-top: 2em;
+    text-align: center;
+    font-size: 1.3em;
+
+    input[type='checkbox'] {
+        font-size: 2em;
+        width: 30px;
+    }
+    
+    a {
+        text-decoration: underline;
+        font-size: 1.3em;
+    }
+}

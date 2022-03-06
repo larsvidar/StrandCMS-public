@@ -1,0 +1,10 @@
+@import '../../../../../styles/general.scss';
+
+.ModuleItem {
+    --primaryColor: white;
+    --primaryText: black;
+
+    .module {
+        margin-bottom: 1.5em;
+    }
+}

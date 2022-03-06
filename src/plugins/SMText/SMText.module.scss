@@ -1,0 +1,15 @@
+@import '../../styles/general.scss';
+
+.SMText {
+    --primaryColor: white;
+    --primaryText: black;
+
+    width: 100%;
+    text-align: left;
+
+    textarea {
+        width: 100%;
+        padding: .5em;
+        height: 250px;
+    }
+}

@@ -1,6 +1,6 @@
 /***** IMPORTS *****/
-import {genObject} from "../../interfaces/IGeneral";
-import {articlesObj} from "../FireBase/firebaseHandler";
+import {genObject} from '../../interfaces/IGeneral';
+import {articlesObj} from '../crudder/firebaseHandler';
 
 
 /***** FUNCTIONS *****/
@@ -28,7 +28,7 @@ import {articlesObj} from "../FireBase/firebaseHandler";
 /**
  * Gets articles from server.
  * @param {Function} setArticles Function for setting gotten articles to state.
- * @param {boolean} getAll Get also unpublished articles (must be athenticated).
+ * @param {boolean} getAll Get also unpublished articles (must be authenticated).
  */
 // export const readArticles = async (
 //     filter: genObject, 
@@ -46,7 +46,7 @@ import {articlesObj} from "../FireBase/firebaseHandler";
 //         : [];
 
 
-//     //Getting images from Server, if any (No longer neccassary).
+//     //Getting images from Server, if any (No longer necessary).
 //     // for(let article of sortedArticles) {
 
 //     //     //Check if article has any images...
@@ -75,16 +75,16 @@ import {articlesObj} from "../FireBase/firebaseHandler";
  * @param {genObject} data Data to update.
  * @param {Function} setArticles Function to update articles in state.
  * @return {Promise<boolean | Error> } Promise that resolves to true if update was
- *  - sucsessful, Error-object if not. 
+ *  - successfully, Error-object if not. 
  */
 export const updateArticle = async (
-    articleId: string, data: genObject, setArticles: Function
+    articleId: string, data: genObject, setArticles: any
 ): Promise<boolean | Error> => {
 
     //Updates article.
     const articleResponse = await articlesObj.update(articleId, data, true);
     
-    //If update was succsessful, update article in state.
+    //If update was successful, update article in state.
     if(articleResponse) {
         setArticles((prevArticles: Array<genObject>) => {
             return prevArticles.map((article: genObject) => {
@@ -92,13 +92,13 @@ export const updateArticle = async (
                     return {...article, ...data};
                 }
                 return article;
-            })
-        })
+            });
+        });
     }
 
     //Return response.
     return articleResponse;
-}
+};
 
 
 /**
@@ -107,7 +107,7 @@ export const updateArticle = async (
  * @param {Function} setArticles Function for updating articles-state.
  * @return {Promise<genObject>} Promise that resolves to delete-response-object.
  */
-export const handleDeleteArticle = async (articleId: string, setArticles: Function) => {
+export const handleDeleteArticle = async (articleId: string, setArticles: any) => {
     const deleteResponse = await articlesObj.delete(articleId);
     
     if(deleteResponse) {
@@ -115,8 +115,8 @@ export const handleDeleteArticle = async (articleId: string, setArticles: Functi
             return prevArticles.filter((article: genObject) => {
                 return article.id !== articleId;
             });
-        })
+        });
     }
 
     return deleteResponse;
-}
+};

@@ -1,6 +1,6 @@
 /***** IMPORTS *****/
-import { genObject } from "../../interfaces/IGeneral";
-import { settingsObj } from "../FireBase/firebaseHandler";
+import {genObject} from '../../interfaces/IGeneral';
+import {settingsObj} from '../crudder/firebaseHandler';
 
 
 /***** FUNCTIONS *****/
@@ -8,12 +8,10 @@ import { settingsObj } from "../FireBase/firebaseHandler";
 /**
  * Gets and returns settings
  * @param {Function} setSettings Function for setting result to state.
- * @param {string} docName - OPTIONAL - Name of subsettings to return.
+ * @param {string} docName - OPTIONAL - Name of sub-settings to return.
  * @return {Promise<genObject>} Promise that resolves to Settings-object.
  */
-export const readSettings = async (
-    setSettings: Function, docName?: string
-):Promise<genObject> => {
+export const readSettings = async (setSettings: any, docName?: string):Promise<genObject> => {
 //Get settings from back-end.
 const settings = await settingsObj.read(docName);
 
@@ -26,7 +24,7 @@ docName
 return docName
     ? {[docName]: settings}
     : settings;
-}
+};
 
 
 /**
@@ -35,11 +33,6 @@ return docName
  * @param {genObject} data Date to update.
  * @param {boolean} doMerge If true, then dont overwrite item, just merge data.
  */
-export const updateSettings = (
-    item: string, 
-    data: genObject, 
-    doMerge: boolean = false
-) => {
-
+export const updateSettings = (item: string, data: genObject, doMerge = false) => {
     return settingsObj.update(item, data, doMerge);
-}
+};

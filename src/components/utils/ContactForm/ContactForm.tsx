@@ -1,68 +1,16 @@
 /***** IMPORTS *****/
-import React, { useContext } from 'react';
-import styled from 'styled-components';
-import { AppContext } from '../../../Handler/Handler';
-import { isError } from '../../../Handler/actions/actions';
-import { genObject } from '../../../interfaces/IGeneral';
-
-const ContactFormStyles = styled.div`
-    text-align: left;
-    margin: 1em;
-
-    form {
-        display: flex;
-        flex-direction: column;
-        align-content: flex-start;
-        width: ${props => props.theme.width};;
-
-        .formItem {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 1em;
-
-            label {
-                letter-spacing: 1.5px;
-            }
-
-            input, textarea {
-                width: 450px;
-                padding: .5em;
-                font-family: sans-serif;
-            }
-
-            textarea {
-                height: 200px;
-            }
-        }
-
-        .submitButton {
-            text-align: center;
-            margin-bottom: 3em;
-
-            input {
-                width: 200px;
-                padding: .5em;
-                border-radius: 5px;
-                border: solid 1px #aaa;
-
-                &:hover {
-                    box-shadow: 2px 2px 5px #ccc;
-                }
-
-                &:active {
-                    box-shadow: 1px 1px 2px #bbb;
-                }
-            }
-        }
-    }
-
-`;
+import React, {SyntheticEvent, useContext, useRef} from 'react';
+import styles from './ContactForm.module.scss';
+import {AppContext} from '../../../Handler/Handler';
+import {isError} from '../../../Handler/actions/actions';
+import {genObject, TContact} from '../../../interfaces/IGeneral';
+import {setTheme} from '../../../Handler/actions/sActions';
 
 
 /***** INTERFACES *****/
 interface IContactFormProps {
     test?: boolean,
-    mode?: 'contact' | 'member' | 'info', //Default is 'contact
+    mode?: TContact, //Default is 'contact
 }
 
 
@@ -76,20 +24,21 @@ const ContactForm = ({test, mode = 'contact'}: IContactFormProps) => {
 
 
     /*** Variables ***/
-    const theme = {
-        width: mode === 'member' ? '700px' : mode === 'info' ? '530px' : '650px',
-    }
+    const contactFormRef = useRef(null);
+    const theme = {width: mode === 'member' ? '700px' : mode === 'info' ? '530px' : '650px'};
 
 
     /*** Functions ***/
-    const handleSubmit = async (event: any) => {
+    const handleSubmit = async (event: SyntheticEvent) => {
+
+        const target = event.target as HTMLFormElement;
         
         //Handle event
         event.preventDefault();
         event.persist();
 
         //Make variables for form-data, and date to post to server.
-        const formData = new FormData(event.target);
+        const formData = new FormData(target);
         const postData: genObject = {test: test};
 
         //Build postData based on passed mode.
@@ -106,7 +55,7 @@ const ContactForm = ({test, mode = 'contact'}: IContactFormProps) => {
                 const name = formData.get('name');
                 const phone = formData.get('phone');
         
-                //Bulid message with name and phone included.
+                //Build message with name and phone included.
                 postData.message = 
                     '<strong>Interesse for medlemsskap:</strong>' +
                     '<p>Borettslag/sameie: ' + name + '</p>' +
@@ -123,7 +72,6 @@ const ContactForm = ({test, mode = 'contact'}: IContactFormProps) => {
 
 
         setShowLoader(true);
-        let error = '';
         const response = await fetch('https://us-central1-strandkantenbydel.cloudfunctions.net/sendmail/email', {   
             method: 'POST',
             mode: 'cors',
@@ -131,25 +79,29 @@ const ContactForm = ({test, mode = 'contact'}: IContactFormProps) => {
                 'content-type': 'application/json',
             },
             body: JSON.stringify(postData),
-        }).then((response: any) => response.json())
-        .catch((thisError) => error = thisError);
+        }).then((response) => response.json())
+        .catch((error) => error);
 
-        if(isError(response) || error) {
+        if(isError(response)) {
             setMessage('Feil ved sending. Prøv igjen...');
-            console.log('ERROR: ', error || response?.message);
+            console.log('ERROR: ', response?.message);
             setShowLoader(false);
             return;
         }
 
         setShowLoader(false);
-        setMessage('Melding sendt');
-        event.target.reset();;
-    }
+        setMessage('Melding sent');
+        target.reset();
+    };
+
+    /*** Program ***/
+    //Send values to css.
+    setTheme(theme, contactFormRef);
     
 
     /*** Return-statement ***/
     return(
-        <ContactFormStyles theme={theme}>
+        <div className={styles.ContactForm} ref={contactFormRef} >
             {mode === 'contact' && <p>Skriv inn e-post og beskjed:</p>}
             <form onSubmit={handleSubmit}>
 
@@ -204,9 +156,9 @@ const ContactForm = ({test, mode = 'contact'}: IContactFormProps) => {
                     <input type='submit' value={mode === 'info' ? 'Få info' : 'Send melding'} />
                 </div>
             </form>
-        </ContactFormStyles>
+        </div>
     );
-}
+};
 
 
 /***** EXPORTS *****/

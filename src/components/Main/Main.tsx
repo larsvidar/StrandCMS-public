@@ -1,76 +1,48 @@
 /***** IMPORTS *****/
-import React, { useContext } from 'react';
+import React, {ReactNode, useContext} from 'react';
+import styles from './Main.module.scss';
 import TopBar from './TopBar/TopBar';
 import Footer from './Footer/Footer';
-import { AppContext } from '../../Handler/Handler';
+import {AppContext} from '../../Handler/Handler';
 import Messages from '../utils/Messages/Messages';
-import styled from 'styled-components';
-import { IHistory } from '../../interfaces/IGeneral';
-import { withRouter } from 'react-router-dom';
 import Loader from '../utils/ShowLoader/Loader/Loader';
-//import { styleValues } from '../../styles/general';
-
-
-/***** Global Variables *****/
-
-
-/***** Styles *****/
-const MainStyle = styled.div`
-
-    .main {
-        background: #a9b8cf;
-    }
-
-    .admin {
-        background: white;
-    }
-
-    .TopBar {
-
-    }
-
-    .Footer {
-
-    }
-`;
 
 
 /***** INTERFACES *****/
-interface IMainProps extends IHistory {
-    children: any,
+interface IMainProps {
+    children: ReactNode,
 }
 
 
 /***** COMPONENT-FUNCTION *****/
-const Main = ({children, location}: IMainProps) => {
+const Main = ({children}: IMainProps) => {
 
     /*** Context ***/
     const context = useContext(AppContext);
     const {state} = context || {};
     const {showLoader, messages} = state || {};
-    const path = location.pathname.split('/')[1];
 
 
     /*** Return-statement ***/
     return(
-        <MainStyle className={path === 'admin' ? 'admin' : 'main'}>
+        <div className={styles.Main}>
+
             {/* Loading-indicator */}
             {showLoader && <Loader />}
 
             {/* Message-component */}
-            {messages?.length
-                ?   <Messages />
-                :   null
-            }
+            {!!messages?.length && <Messages />}
 
             {/* Site-layout */}
-            <TopBar className='TopBar' />
-                {children}
-            <Footer className={path === 'admin' ? 'Footer' : ''} />
-        </MainStyle>
+            <TopBar />
+                <div className={styles.container}>
+                    {children}
+                </div>
+            <Footer />
+        </div>
     );
-}
+};
 
 
 /***** EXPORTS *****/
-export default withRouter(Main);
+export default Main;

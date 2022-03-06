@@ -1,0 +1,61 @@
+@import '../../../styles/general.scss';
+
+.ItemEditor {
+    --formGap: .5em;
+
+    margin: 2em;
+    padding-bottom: 2em;
+
+    h2 {
+        margin-bottom: var(--formGap);
+    }
+
+    .image {
+        width: 100px;
+    }
+
+    .contact {
+        
+        label {
+            margin-right: 1em;
+        }
+
+        select {
+            padding: .3em .5em;
+        }
+    }
+
+
+    .item-url {
+        display: flex;
+        margin: 1em 0;
+        font-size: 1.1em;
+
+
+        .item-url-title {
+            font-weight: 600;
+            margin-right: .5em;
+        }
+
+        .item-url-string {
+            font-style: italic;
+
+            :hover {
+                text-decoration: underline;
+            }
+        }
+    }
+    
+    .grayed-out {
+
+        input, label {
+            color: #888;
+        }
+
+        input {
+            background: #ddd; 
+        }
+
+    }
+
+}

@@ -1,0 +1,54 @@
+@import '../../../styles/general.scss';
+
+.ContactForm {
+    --width: 700px;
+    text-align: left;
+    margin: 1em;
+
+    form {
+        display: flex;
+        flex-direction: column;
+        align-content: flex-start;
+        width: var(--width);
+
+        .formItem {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1em;
+
+            label {
+                letter-spacing: 1.5px;
+            }
+
+            input, textarea {
+                width: 450px;
+                padding: .5em;
+                font-family: sans-serif;
+            }
+
+            textarea {
+                height: 200px;
+            }
+        }
+
+        .submitButton {
+            text-align: center;
+            margin-bottom: 3em;
+
+            input {
+                width: 200px;
+                padding: .5em;
+                border-radius: 5px;
+                border: solid 1px #aaa;
+
+                &:hover {
+                    box-shadow: 2px 2px 5px #ccc;
+                }
+
+                &:active {
+                    box-shadow: 1px 1px 2px #bbb;
+                }
+            }
+        }
+    }
+}

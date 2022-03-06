@@ -1,5 +1,5 @@
 /***** IMPORTS *****/
-import { genObject, IArticle } from "./IGeneral";
+import {genObject, IArticle} from "./IGeneral";
 
 
 /***** INTERFACES ******/
@@ -9,13 +9,14 @@ export interface IContext {
 }
 
 export interface IState {
-    settings: ISettings,
-    articles: IArticle[], 
+    settings: ISettings, 
     showLoader: boolean,
     messages: string[],
     isLoggedIn: boolean,
     pages: genObject[],
     menu: genObject,
+    locale: string,
+    articles: IArticle[],
 }
 
 export interface ISettings {
@@ -36,15 +37,18 @@ export interface ITheme {
     secondaryText: string,
     linkColor: string,
     linkUnderline: boolean,
+    created?: string,
+    updated?: string,
+    uid?: string,
 };
 
 export interface IActions {
     setSettings: Function,
-    setArticles: Function,
     setShowLoader: Function,
     setMessage: Function,
-    cache: Function,
     setIsLoggedIn: Function,
     setPages: Function,
     setMenu: Function,
+    getLoc: Function,
+    setArticles: Function,
 }

@@ -1,0 +1,69 @@
+@import '../../../../styles/general.scss';
+
+.Article {
+    --linkColor: red;
+    --linkUnderline: underline;
+    display: flex;
+    flex-direction: column;
+    margin: 1em 1em 1em 0;
+
+    h2 {
+        margin-bottom: 1em;
+    }
+
+    h3 {
+        margin-bottom: 1em;
+    }
+
+    .byline {
+        display: flex;
+
+        .author, .date {
+            font-size: .9em;
+            font-style: italic;
+            color: #888;
+            margin-bottom: .5em;
+
+            span {
+                text-transform: capitalize;
+            }
+        }
+
+        .author {
+            margin-right: 1em;
+
+            &::after {
+                content: '|';
+                margin-left: 1em;
+            }
+        }
+    }
+
+    img {
+        margin: 1.5em auto;
+        object-fit: cover;
+        width: 100%;
+        height: 30vw;
+        border: solid 3px #888;
+        border-radius: 5px;
+    }
+
+    ul {
+        list-style-position: inside;
+    }
+
+
+    .text {
+        display: grid;
+
+        p {
+            margin-bottom: 1em;
+            font-size: 1.1em;
+        }
+
+        a {
+            color: var(--linkColor);
+            text-decoration: var(--linkUnderline);
+        }
+    }
+}

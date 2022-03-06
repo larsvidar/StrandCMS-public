@@ -1,0 +1,18 @@
+@import '../../styles/general.scss';
+
+.Main {
+    position: relative;
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin: 0 auto;
+        width: 90%;
+        max-width: 1200px;
+        background: white;
+        //top: ${props => props.theme.heroHeight};
+        padding: 2em 4em 2em;
+        box-shadow: 5px 0 10px rgba(0, 0, 0, .3), -5px 0 10px rgba(0, 0, 0, .3);
+    }
+}

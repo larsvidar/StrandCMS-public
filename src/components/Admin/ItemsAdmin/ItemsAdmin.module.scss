@@ -1,0 +1,87 @@
+@import '../../../styles/general.scss';
+
+.ItemsAdmin {
+    --secondaryColor: #333;
+
+    padding: 1em 0 1em 4em;
+    max-width: 1060px;
+
+    h2 {
+        margin-bottom: 1em;
+    }
+
+    .checkbox-menu {
+        display: flex;
+        list-style: none;
+        margin-bottom: .5em;
+        text-decoration: underline;
+
+        li {
+            margin-right: .5em;
+            cursor: pointer;
+        }
+    }
+
+    .article-list {
+        list-style: none;
+        border: solid 1px #aaa;
+        margin-bottom: 1.5em;
+
+        .legends {
+            padding: 1em 1em;
+            color: white;
+            background: var(--secondaryColor);
+        }
+
+        li {
+            display: grid;
+            grid-template-columns: 1fr 8fr 3fr 4fr 3fr 1fr;
+            align-content: center;
+            justify-items: start;
+            padding: 1em;
+            border-bottom: solid 1px #aaa;
+
+            input[type='checkbox'] {
+                margin-right: 1em;
+                align-self: center;
+            }
+
+            a {
+                display: grid;
+                
+                .article-title {
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    font-weight: 100;
+                    align-self: center;
+                    max-width: 100%;
+                    padding-right: .5em;
+                }
+            }
+
+            p {
+                align-self: center;
+                color: #888;
+                font-size: .9em;
+            }
+        }
+
+        .page-li {
+            grid-template-columns: 2fr 20fr 1fr;
+        }
+    }
+
+    .new-button {
+        border: solid 1px #aaa;
+        border-radius: 5px;
+        background: #5566aa;
+        color: white;
+        padding: 10px 15px;
+        cursor: pointer;
+        
+        &:hover {
+            background: #7788cc;
+        }
+    }
+}

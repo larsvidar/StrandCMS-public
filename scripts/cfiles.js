@@ -34,12 +34,10 @@ function generateTSXContent(baseFilename) {
 
     return (
 `/***** IMPORTS *****/
-import React from 'react';
-import styled from 'styled-components';
-
-const ${baseFilename}Styles = styled.div\`
-        margin: 1em;
-\`;
+import React, {FC, useContext, useEffect, useRef} from 'react';
+import styles from './${SCSSModule}';
+import {AppContext} from '../../Handler/Handler';
+import {setTheme} from '../../Handler/actions/sActions';
 
 
 /***** INTERFACES *****/
@@ -47,37 +45,72 @@ interface ${IProps} {}
 
 
 /***** COMPONENT-FUNCTION *****/
-const ${baseFilename} = (props: ${IProps}) => {
+const ${baseFilename}: FC<${IProps}> = (): JSX.Element => {
+
+    /*** Context ***/
+    const context = useContext(AppContext);
+    const {state, actions} = context || {};
+    const {settings} = state || {};
+    const {theme} = settings || {};
+    const {getLoc} = actions || {};
+
+
+    /*** Variables ***/
+    const ${baseFilename.toLowerCase()}Ref = useRef<any | null>(null);
+    const loc = getLoc('${baseFilename.toLowerCase()}');
+
+
+    /*** Efects ***/
+
+    //Runs when theme-context update.
+    // -Sets value from theme to SCSS-file.
+    useEffect(() => {
+        if(theme) setTheme(theme, ${baseFilename.toLowerCase()}Ref)
+    }, [theme]);
+
     
     /*** Return-statement ***/
     return(
-        <${baseFilename}Styles>
+        <div className={styles.${baseFilename}} ref={${baseFilename.toLowerCase()}Ref} >
             <p>Content of this new component goes here!</p>
-        </${baseFilename}Styles>
+        </div>
     );
 }
 
 
 /***** EXPORTS *****/
 export default ${baseFilename};
-
 `
 );}
 
 
-/**
- * Function for generate content for the IProps file.
- * @param {string} baseFilename - The base name to create all filenames from.
- * @return {string} - The content to fill the file with. 
- */
-function generateIPropsContent(baseFilename) {
-    const IProps = `I${baseFilename}Props`
+function generateTestFile(baseFilename) {
+    return `import React from 'react';
+import {render, unmountComponentAtNode} from 'react-dom';
+import ${baseFilename} from './${baseFilename}';
+import {BrowserRouter, Route} from 'react-router-dom';
 
-    return (
-`export default interface ${IProps} {
+let container: any = null;
 
-}`
-    );}
+beforeEach(() => {
+    // setup a DOM element as a render target
+    container = document.createElement('div');
+    document.body.appendChild(container);
+});
+    
+afterEach(() => {
+    // cleanup on exiting
+    unmountComponentAtNode(container);
+    container.remove();
+    container = null;
+});
+
+it('Renders ${baseFilename} without crashing', () => {
+    render(<BrowserRouter>
+        <Route render={() => <${baseFilename} />} />
+    </BrowserRouter>, container);
+});`
+}
 
 
 /**
@@ -87,10 +120,11 @@ function generateIPropsContent(baseFilename) {
  */
 function generateSCSSModule(baseFilename) {
     return (
-`@import '../../styles/variables.scss';
+`@import '../../styles/general.scss';
 
 .${baseFilename} {
-
+    --primaryColor: white;
+    --primaryText: black;
 }`
     );}
 
@@ -124,11 +158,11 @@ fs.writeFile(`${folder}/${args[0]}/${args[0]}.tsx`, generateTSXContent(args[0]),
 });
 
 //Make SCSS-module file in folder
-// fs.writeFile(`${folder}/${args[0]}/${args[0]}.module.scss`, generateSCSSModule(args[0]), (error) => {
-//     fsStatus(error);
-// });
+fs.writeFile(`${folder}/${args[0]}/${args[0]}.module.scss`, generateSCSSModule(args[0]), (error) => {
+    fsStatus(error);
+});
 
-// //Make IProps file in folder
-// fs.writeFile(`${folder}/${args[0]}/I${args[0]}Props.tsx`, generateIPropsContent(args[0]), (error) => {
-//     fsStatus(error);
-// });
+//Make test file in folder
+fs.writeFile(`${folder}/${args[0]}/${args[0]}.test.tsx`, generateTestFile(args[0]), (error) => {
+    fsStatus(error);
+});

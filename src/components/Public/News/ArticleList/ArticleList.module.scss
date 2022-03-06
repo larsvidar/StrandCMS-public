@@ -1,0 +1,13 @@
+@import '../../../../styles/general.scss';
+
+.ArticlesList {
+    margin: 1em 0;
+
+    .article {
+        margin: 1.5em 0;
+    }
+
+    hr {
+        border: solid 1px #eee;
+    }
+}

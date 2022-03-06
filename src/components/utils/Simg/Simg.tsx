@@ -19,7 +19,7 @@ interface IUimgProps extends IBaseProps {
 
 
 /***** COMPONENT-FUNCTION *****/
-const Simg = ({src, alt, className}: IUimgProps) => {
+const Simg = ({src, alt, className}: IUimgProps): JSX.Element => {
 
     /*** State ***/
     const [imageSrc, setImageSrc] = useState(src);
@@ -27,12 +27,12 @@ const Simg = ({src, alt, className}: IUimgProps) => {
     
     /*** Return-statement ***/
     return <SimgStyle
-                className={className}
-                src={imageSrc ? imageSrc : broken}
-                alt={alt ? alt : ''} 
-                onError={() => setImageSrc(noimage)}
-            /> 
-}
+        className={className}
+        src={imageSrc ? imageSrc : broken}
+        alt={alt ? alt : ''} 
+        onError={() => setImageSrc(noimage)}
+    />;
+};
 
 
 /***** EXPORTS *****/

@@ -1,0 +1,23 @@
+@import '../../styles/general.scss';
+
+.SMByline {
+    --primaryColor: white;
+    --primaryText: black;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    width: 100%;
+    
+    input[type='text'] {
+        padding: .5em;
+        width: 70%;
+    }
+
+    .date {
+        align-self: center;
+        margin: 0;
+        font-size: 1.1em;
+    }
+}

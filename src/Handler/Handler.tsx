@@ -1,15 +1,14 @@
 /***** IMPORTS *****/
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, ReactNode} from 'react';
 import '../styles/styles.css';
-import {getConfig, isError, sortObjectArray} from './actions/actions';
+import {isError} from './actions/actions';
 import {ISettings, IContext, IState, IActions} from '../interfaces/IState';
-import {IArticle, genObject} from '../interfaces/IGeneral';
-import {settingsObj, pagesObj, articlesObj} from './FireBase/firebaseHandler';
-import staticArticles from '../staticData/staticArticles.json';
-import staticSettings from '../staticData/staticSettings.json';
-import staticPages from '../staticData/staticPages.json';
-import staticMenu from '../staticData/staticMenu.json';
-import { defaultSettings } from './defaultState';
+import {genObject, IArticle} from '../interfaces/IGeneral';
+import {settingsHandler} from './collectionActions/settingsHandler';
+import {pagesHandler} from './collectionActions/pagesHandler';
+import {articlesHandler} from './collectionActions/articlesHandler';
+import {checkLogin} from './actions/authActions';
+import {getConfig, getLanguage} from './actions/sActions';
 
 
 /***** CONTEXT *****/
@@ -18,46 +17,76 @@ export const AppContext = React.createContext<IContext>({} as IContext);
 
 /***** INTERFACES *****/
 interface IStateContainerProps {
-    children: any,
+    children: ReactNode,
 }
 
 
 /***** PROVIDER-FUNCTION *****/
 const Provider = (props: IStateContainerProps) => {
 
+    /*** Variables ***/
+    const defaultLocale = 'en';
+    
+
     /*** State ***/
-    const [settings, setSettings] = useState<ISettings>(staticSettings as ISettings);
-    const [articles, setArticles] = useState<IArticle[]>(staticArticles as IArticle[]);
-    const [pages, setPages] = useState<genObject[]>(staticPages)
+    const [settings, setSettings] = useState<ISettings>({} as ISettings);
     const [showLoader, setShowLoader] = useState<boolean>(false);
     const [messages, setMessageArray] = useState<string[]>([]);
-    const [cacheState, setCacheState]: any = useState<genObject>({});
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-    const [menu, setMenu] = useState<genObject[]>(staticMenu)
+    const [menu, setMenu] = useState<genObject[]>([]);
+    const [locale, setLocale] = useState<string>(defaultLocale);
+    const [pages, setPages] = useState<genObject[]>([]);
+    const [language, setLanguage] = useState<genObject>({});
+    const [articles, setArticles] = useState<IArticle[]>([]);
 
 
     /*** Effects ***/
-    useEffect(() => {
-        getConfig().then((config: genObject) => {
-            console.log('Current version: ', config.version)
-        });   
-    }, []);
 
+    //Runs once
+    // -Fetches config-data from file.
     useEffect(() => {
-        settingsObj.read().then((thisSettings: any) => setSettings(thisSettings));
-        pagesObj.read().then((thisPages: genObject[]) => setPages(thisPages));
-        articlesObj.read().then((thisArticles: IArticle[]) => {
-            const sortedArticles = sortObjectArray(thisArticles, 'created', 'desc')
-            setArticles(sortedArticles);
+        const config = getConfig(); 
+        setLocale(config.locale);
+        checkLogin().then((response: genObject) => {
+            if(response.idToken) {
+                setIsLoggedIn(true);
+                console.log('User logged in...');
+            } else {
+                setIsLoggedIn(false);
+            }
         });
-        if(!settings.site) setSettings(defaultSettings);
-    //eslint-disable-next-line
+
+        //Logs current version out to console.
+        console.log('Current version: ', config.version);
     }, []);
 
 
-
+    //Runs once.
+    // -Fetches data
     useEffect(() => {
-        const thisMenu = pages?.map((page: genObject) => {
+        settingsHandler.read().then((thisSettings: ISettings) => setSettings(thisSettings));
+        pagesHandler.read().then((thisPages: genObject[]) => {
+            if(!isError(thisPages)) setPages(thisPages || []);
+        });
+        articlesHandler.read().then((thisArticles: IArticle[]) => {
+            setArticles(thisArticles);
+        });
+    }, []);
+
+
+    //Runs when locale-state changes
+    // -Gets language-object from file and sets to state.
+    useEffect(() => {
+        getLanguage(locale).then((languageObject) => {
+            if(languageObject?.title) setLanguage(languageObject);
+        });
+    }, [locale]);
+
+
+    //Runs when pages-state has changes
+    // -generates menu from pages, and sets menu to state.
+    useEffect(() => {
+        const thisMenu = pages?.map((page) => {
 
             const menuItem: genObject = {
                 title: page?.menuTitle ? page.menuTitle : page?.title,
@@ -65,7 +94,6 @@ const Provider = (props: IStateContainerProps) => {
             };
 
             if(page?.menuParent) menuItem.menuParent = page.menuParent;
-
             return menuItem;
         });
 
@@ -77,40 +105,17 @@ const Provider = (props: IStateContainerProps) => {
 
     /*** Functions ***/
 
-    /* State-functions */
-
     /**
-     * Handels writing and reading data from cache.
-     * @param {string} thisState Name of state to set or get.
-     * @param {genObject=} data -Optional- Data as an object to cache and set to state.
-     * @param {Function=} setData -Optional- Function for setting data to state.
+     * Gets language-data for a specific page, or whole language-object if page is not specified. 
+     * @param {string=} page Name of component to get language-data for.
+     * @return {genObject} Language-object 
      */
-    const cache = (thisState: keyof typeof state, data?:  genObject, setData?: Function) => {
-        //Check to see if passed data is valid.
-        if(isError(data)) return new Error('No valid data...');
-
-        // If no date or no function for setting data is passed, just return 
-        // data from cache, or from state if it does not exist in cache.
-        if(!data || !setData) {
-            if(cacheState[thisState]) {
-                return cacheState[thisState];
-            } else {
-                return state[thisState];
-            }
-        }
-
-        //If data and setState-function is passed, set data to both cache and state.
-        if(data && setData) {
-            setData(data);
-            setCacheState({[thisState]: data});
-            return true;
-        }
-
-        //If no of the above conditions are met, return error.
-        return new Error('Could not cache data...');
-    }
-
+    const getLoc = (page?: string) => {
+        if(page) return language[page] || {};
+        return language;
+    };
     
+
     /**
      * Function for setting messages
      * @param {string} message Message to be added to message-array. 
@@ -124,31 +129,34 @@ const Provider = (props: IStateContainerProps) => {
                 ? []
                 : [...prevMessages, message]
         );
-    }
+    };
 
-    /*** Variables ***/
+
+    /*** Context-variables ***/
 
     //State
     const state: IState = {
         settings,
-        articles, 
         showLoader,
         messages,
         isLoggedIn,
         pages,
         menu,
+        locale,
+        articles,
     };
+
 
     // Actions
     const actions: IActions = {
         setSettings,
-        setArticles,
         setShowLoader,
         setMessage,
-        cache,
         setIsLoggedIn,
         setPages,
         setMenu,
+        setArticles,
+        getLoc,
     };
 
 
@@ -161,7 +169,7 @@ const Provider = (props: IStateContainerProps) => {
             {props.children}
         </AppContext.Provider>
     );
-}
+};
 
 
 /***** EXPORTS *****/

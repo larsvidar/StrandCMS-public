@@ -1,0 +1,49 @@
+@import '../../../../../styles/general.scss';
+
+.SubMenuStyle {
+    --primaryText: #000;
+    --primaryColor: #fff;
+
+    display: inline-flex;
+    align-content: center;
+    padding: 1em;
+    position: relative;
+    align-items: flex-end;
+
+    &:hover {
+        backdrop-filter: brightness(1.5);
+        z-index: 100;
+    }
+
+    &:hover > .sub-menu {
+        display: flex;
+    }
+
+    .sub-menu-link {
+        margin: 0 .5em 0;
+        color: var(--primaryText);
+    }
+    
+    .sub-menu {
+        display: none;  /* Flex when hover; */
+        flex-direction: column;
+        position: absolute;
+        top: 50px;
+        left: 0;
+        z-index: 100;
+        background: var(--primaryColor);
+        border-radius: 0 0 5px 5px;
+        border-right: solid 1px #888;
+        border-bottom: solid 1px #888;
+        border-left: solid 1px #888;
+
+        .sub-menu-item {
+            color: var(--primaryText);
+            padding: 1em;
+
+            &:hover {
+                backdrop-filter: brightness(1.5);
+            }
+        }
+    }
+}

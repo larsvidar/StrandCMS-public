@@ -1,0 +1,16 @@
+@import '../../styles/general.scss';
+
+.SMTitle {
+    --primaryColor: white;
+    --primaryText: black;
+
+    width: 100%;
+    text-align: left;
+
+    input {
+        width: 100%;
+        height: 100%;
+        padding: .5em;
+        font-size: 1.5em;
+    }
+}

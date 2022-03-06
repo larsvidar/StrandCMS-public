@@ -13,7 +13,7 @@ interface ICheckboxProps {
     onChange: Function,
     checked: boolean,
     value: string,
-};
+}
 
 
 /***** COMPONENT-FUNCTION *****/
@@ -32,7 +32,7 @@ const Checkbox = ({onChange, checked, value}: ICheckboxProps) => {
     /*** Functions ***/
     const handleCheckbox = () => {
         onChange(isChecked, value);
-    }
+    };
     
     /*** Return-statement ***/
     return(
@@ -45,7 +45,7 @@ const Checkbox = ({onChange, checked, value}: ICheckboxProps) => {
            
         </CheckboxStyle>
     );
-}
+};
 
 
 /***** EXPORTS *****/

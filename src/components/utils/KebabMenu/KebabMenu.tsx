@@ -1,54 +1,30 @@
 /***** IMPORTS *****/
-import React, { useContext, useState, useEffect } from 'react';
-import styled from 'styled-components';
-import { AppContext } from '../../../Handler/Handler';
-import { FaEllipsisH } from 'react-icons/fa';
-
-
-/***** STYLES *****/
-const KebabMenuStyle = styled.div`
-    position: relative;
-
-    .kebab {
-        font-size: 1.2em;
-        cursor: pointer;
-    }
-
-    .menu {
-        background: white;
-        border: solid 1px #aaa;
-        z-index: 100;
-        position: absolute;
-        right: -20px;
-        border-radius: 5px;
-        box-shadow: 5px 5px 3px rgba(0, 0, 0, .3);
-
-        li {
-            cursor: pointer;
-
-            &:hover{
-                background: ${props => props.theme.primaryColor};
-                filter: brightness(1.5) hue-rotate(20deg);
-            }
-        }
-    }
-`;
+import React, {useContext, useState, useEffect, FC, useRef} from 'react';
+import styles from './KebabMenu.module.scss';
+import {AppContext} from '../../../Handler/Handler';
+import {FaEllipsisH} from 'react-icons/fa';
+import {setTheme} from '../../../Handler/actions/sActions';
 
 
 /***** INTERFACES *****/
 interface IKebabMenuProps {
     menu: Array<string>,
     id: string;
-    onClick: Function,
-};
+    onClick: any,
+}
 
 
 /***** COMPONENT-FUNCTION *****/
-const KebabMenu = ({menu, id, onClick}: IKebabMenuProps) => {
+const KebabMenu: FC<IKebabMenuProps> = ({menu, id, onClick}) => {
+
+    /*** Variables ***/
+    const kebabMenuRef = useRef(null);
 
     /*** Context ***/
     const context = useContext(AppContext);
-    const {settings} = context && context.state;
+    const {state} = context || {};
+    const {settings} = state || {};
+    const {theme} = settings || {};
 
 
     /*** State ***/
@@ -58,7 +34,7 @@ const KebabMenu = ({menu, id, onClick}: IKebabMenuProps) => {
     /*** Effects ***/
     //Runs when showKebab changes.
     useEffect(() => {
-        // Sets eventlistener to close kebab-menu if any part of the 
+        // Sets event-listener to close kebab-menu if any part of the 
         // page is clicked.
         if(showKebab) {
             document.addEventListener('click', handleKebab);
@@ -68,7 +44,14 @@ const KebabMenu = ({menu, id, onClick}: IKebabMenuProps) => {
 
         return () => document.removeEventListener('click', handleKebab);
     //eslint-disable-next-line
-    }, [showKebab])
+    }, [showKebab]);
+
+
+    //Runs when theme-context updates
+    // -Sets values from theme to css.
+    useEffect(() => {
+        setTheme(theme, kebabMenuRef);
+    }, [theme]);
 
 
     /*** Functions ***/
@@ -81,7 +64,7 @@ const KebabMenu = ({menu, id, onClick}: IKebabMenuProps) => {
         showKebab
             ? setShowKebab(false)
             : setShowKebab(true);
-    }
+    };
 
 
     /**
@@ -91,11 +74,11 @@ const KebabMenu = ({menu, id, onClick}: IKebabMenuProps) => {
      */
     const handleMenuClick = (index: number) => {
         onClick(index, [[id]]);
-    }
+    };
 
     /*** Return-statement ***/
-    return <KebabMenuStyle theme={settings && settings.theme}>
-        {/* The elipse-icon */}
+    return <div className={styles.KebabMenu} ref={kebabMenuRef} >
+        {/* The ellipse-icon */}
         <FaEllipsisH
             className='kebab' 
             onClick={handleKebab}/>
@@ -109,8 +92,8 @@ const KebabMenu = ({menu, id, onClick}: IKebabMenuProps) => {
                 </li>
             ))}
         </ul>}
-    </KebabMenuStyle>;
-}
+    </div>;
+};
 
 
 /***** EXPORTS *****/

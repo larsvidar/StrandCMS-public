@@ -1,9 +1,9 @@
 /***** IMPORTS *****/
 import React, {useState, useEffect, useContext} from 'react';
-import {articlesObj} from '../../../Handler/FireBase/firebaseHandler';
 import {IArticle} from '../../../interfaces/IGeneral';
-import { AppContext } from '../../../Handler/Handler';
-import { IAdminContext, IAdminState, IAdminActions } from '../../../interfaces/IAdmin';
+import {AppContext} from '../../../Handler/Handler';
+import {IAdminContext, IAdminState, IAdminActions} from '../../../interfaces/IAdmin';
+import {articlesHandler} from '../../../Handler/collectionActions/articlesHandler';
 
 
 /***** CONTEXT *****/
@@ -13,7 +13,7 @@ export const AdminContext = React.createContext<IAdminContext>({} as IAdminConte
 /***** INTERFACES *****/
 interface IAdminProviderProps {
     children: any,
-};
+}
 
 
 /***** COMPONENT-FUNCTION *****/
@@ -37,7 +37,7 @@ const AdminProvider = (props: IAdminProviderProps) => {
     //Make actions-object.
     const adminActions: IAdminActions = {
         setAllArticles,
-        setAllPages: setPages || function(){},
+        setAllPages: setPages || function(){/*Empty*/},
     };
 
     
@@ -45,7 +45,7 @@ const AdminProvider = (props: IAdminProviderProps) => {
 
     //Get all articles and set them to state.
     useEffect(() => {
-        articlesObj.read(true).then((thisArticles: IArticle[]) => setAllArticles(thisArticles));
+        articlesHandler.read().then((thisArticles: IArticle[]) => setAllArticles(thisArticles));
     }, []);
 
 
@@ -53,14 +53,11 @@ const AdminProvider = (props: IAdminProviderProps) => {
     return(
         <AdminContext.Provider value={{
             adminState, adminActions
-
         }} >
-
-            {props.children}
-            
+            {props.children}  
         </AdminContext.Provider>
     );
-}
+};
 
 
 /***** EXPORTS *****/

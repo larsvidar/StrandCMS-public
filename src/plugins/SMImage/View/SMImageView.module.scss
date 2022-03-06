@@ -1,0 +1,10 @@
+@import '../../../styles/general.scss';
+
+.SMImageView {
+    --primaryColor: white;
+    --primaryText: black;
+
+    .image {
+        width: 100%;
+    }
+}

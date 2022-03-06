@@ -1,0 +1,46 @@
+@import '../../../../styles/general.scss';
+
+.ModuleChooser {
+    --primaryColor: white;
+    --primaryText: black;
+    
+    display: flex;
+    flex-direction: column;
+    height: 100px;
+    max-height: 100px;
+    width: 100%;
+    margin: 3em 0 10em;
+
+
+    .selector {
+        display: flex;
+        height: 100%;
+        width: 100%;
+
+        .add {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: solid 1px #999;
+            font-size: 8em;
+            background: #eee;
+            height: 100px;
+            width: 100px;
+            font-family: monospace;
+            padding: 0 4px 8px 4px;
+            cursor: pointer;
+     
+    
+            &:hover {
+                background: #888;
+                color: white;
+                border-color: #333;
+            }
+        }
+    }
+
+    .compList {
+        height: 100%;
+        width: 100%;
+    }
+}

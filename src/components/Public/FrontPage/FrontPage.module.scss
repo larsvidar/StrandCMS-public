@@ -1,0 +1,24 @@
+@import '../../../styles/general.scss';
+
+.FrontPage {
+    @include values;
+    --heroHeight: 100px;
+
+    .hero {
+        position: absolute;
+        top: var(--topbarHeight);
+        left: 0;
+        margin: 0;
+    }
+
+    .content {
+        margin-top: var(--heroHeight);
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: .5em;
+
+        .latestPosts {
+            justify-self: flex-end;
+        }
+    }
+}

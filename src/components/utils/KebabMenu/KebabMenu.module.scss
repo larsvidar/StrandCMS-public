@@ -1,0 +1,31 @@
+@import '../../../styles/general.scss';
+
+.KebabMenuStyle {
+    --primaryColor: #000;
+
+    position: relative;
+
+    .kebab {
+        font-size: 1.2em;
+        cursor: pointer;
+    }
+
+    .menu {
+        background: white;
+        border: solid 1px #aaa;
+        z-index: 100;
+        position: absolute;
+        right: -20px;
+        border-radius: 5px;
+        box-shadow: 5px 5px 3px rgba(0, 0, 0, .3);
+
+        li {
+            cursor: pointer;
+
+            &:hover{
+                background: var(--primaryColor);
+                filter: brightness(1.5) hue-rotate(20deg);
+            }
+        }
+    }
+}

@@ -1,0 +1,22 @@
+@import '../../../styles/general.scss';
+
+
+.FixedImage {
+    --src: url('./gradient.webp');
+    --width: 100%;
+    --height: auto;
+
+    background: url('./gradient.webp');
+    background-position: center;
+    background-size: cover;
+    width: var(--width);
+    height: var(--height);
+    overflow: hidden;
+
+    .emptyImage {
+        background: #eee;
+        width: var(--width);
+        height: var(--height);
+        overflow: hidden;
+    }
+}

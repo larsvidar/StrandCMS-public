@@ -1,0 +1,20 @@
+@import '../../../../styles/general.scss';
+
+.Menu {
+    --primaryText: #fff;
+
+    display: flex;
+    margin: 0;
+    align-items: flex-end;
+
+    .menuLink {
+        color: var(--primaryText);
+        padding: 1em;
+        margin: 0;
+        align-self: flex-end;
+
+        &:hover {
+            backdrop-filter: brightness(1.5);
+        }
+    }
+}

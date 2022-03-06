@@ -1,111 +1,57 @@
-/***** IMPORTS *****/
-import { genObject } from "../interfaces/IGeneral";
-
-
 /***** NORWEGIAN *****/
+const title = 'StrandCMS';
 
-const title = 'Strandkanten Bydel Tromsø';
-
-export const no: genObject = {
-    title: title,
-
-
-    IndexPage: {
-        title: title,
+const no = {
+    title,
+    
+    /*** App ***/
+    moduleList: {
+        saveButton: 'Lagre',
     },
 
 
-    TopBar: {
-        title: title,
+    /*** Utils ***/
+    pullDownMenu: {
+        chooseModule: 'Velg komponent...',
     },
 
 
-    /*** Main menu ***/
-    Menu: [
-        {title: "Nyheter", url: "/news/"},
-        {title: "Informasjon", url: "/page/informasjon/", parent: "Informasjon"},
-        {title: "Medlemmer", url: "/page/medlemmer/", parent: "Informasjon"},
-        {title: "Styret", url: "/page/kontakt/", parent: "Informasjon"},
-        {title: "Avfallshåndtering", url: "/page/avfall/", parent: "Informasjon"},
-        {title: "Bomiljø", url: "/page/bomiljo/", parent: "Bomiljø"},
-        {title: "Drivhusene", url: "/page/drivhus/", parent: "Bomiljø"},
-        {title: "Havna", url: "/page/havna/", parent: "Bomiljø"},
-        {title: "Basketballbanen", url: "/page/basket/", parent: "Bomiljø"},
-        {title: "Medlemsskap", url: "/page/medlemsskap/"},
+    /*** Modules ***/
+    smTitle: {
+        title: 'Tittel',
+        titlePlaceholder: 'Skriv inn tittel her...',
+    },
 
-        //Husk News
+    smLead: {
+        title: 'Ingress',
+        leadPlaceholder: 'Skriv inn ingress...',
+    },
 
-        // {
-        //     title: 'Nyheter',
-        //     url: '/news/',
-        // },
+    smByline: {
+        title: 'Skrevet av',
+        bylinePlaceholder: 'Skriv inn forfatter her...',
+        date: 'Dato'
+    },
 
+    smText: {
+        title: 'Brødtekst',
+        textPlaceholder: 'Skriv inn artikkelen din her...',
+    },
 
+    smImage: {
+        title: 'Legg til bilde',
+        chooseImage: 'Velg bilde...',
+        captionPlaceholder: 'Skriv inn bildetekst her...'
+    },
 
-        // {
-        //     title: 'Informasjon',
-        //     subMenu: [
-        //         {
-        //             title: 'Informasjon',
-        //             url: '/page/informasjon/',
-        //         },
-        //         {
-        //             title: 'Medlemmer',
-        //             url: '/page/medlemmer/',
-        //         },
-        //         {
-        //             title: 'Kontakt styret',
-        //             url: '/page/kontakt', 
-        //         },
-        //         {
-        //             title: 'Avfallshåndtering',
-        //             url: '/page/avfall',
-        //         },
-        //         // {
-        //         //     title: 'Få informasjon',
-        //         //     url: '/page/sendinfo',
-        //         // },
-        //     ],
-        // },
-        // {
-        //     title: 'Bomiljø',
-        //     subMenu: [
-        //         {
-        //             title: 'Bomiljø',
-        //             url: '/page/bomiljo',
-        //         },
-        //         {
-        //             title: 'Drivhus',
-        //             url: '/page/drivhus',
-        //         }, 
-        //         {
-        //             title: 'Havna',
-        //             url: '/page/havna'
-        //         }, 
-        //         {
-        //             title: 'Basketballbane',
-        //             url: '/page/basket',
-        //         },
-        //     ]
-        // },
-        // {
-        //     title: 'Medlemsskap',
-        //     url: '/page/medlemsskap',
-        // },
-    ],
-
-
-    ItemEditor: {
-        title: 'Ny artikkel',
-        labels: {
-            title: 'Overskrift',
-            lead: 'Ingress',
-            article: 'Artikkel',
-            author: 'Skrevet av:',
-            publish: 'Publiser',
-            submit: 'Lagre artikkel...',
-            date: 'Dato',
-            slug: 'Url-ending (fylles ut automatisk)',
-        }
+    adminMenu: {
+        admin: 'Admin',
+        articles: 'Artikler',
+        pages: 'Sider',
+        siteSettings: 'Nettsideinnstillinger',
     },
 };
+
+
+/***** EXPORTS *****/
+export default no;

@@ -1,0 +1,27 @@
+@import '../../../styles/general.scss';
+
+.AdminPage {
+    padding: 1em 2em;
+    display: flex;
+    flex-direction: column;
+    width: 1200px;
+
+    h2 {
+        margin-bottom: 1em;
+    }
+
+    .link {
+        font-size: 1.2em;
+        cursor: pointer;
+        margin-bottom: .3em;
+        text-decoration: underline;
+    }
+
+    p {
+        margin-bottom: 2em;
+    }
+
+    .logout {
+        cursor: pointer;
+    }
+}

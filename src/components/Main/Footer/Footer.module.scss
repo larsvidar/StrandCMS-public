@@ -1,0 +1,24 @@
+@import '../../../styles/general.scss';
+
+.Footer {
+    --primaryColor: black;
+    --primaryText: white;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+
+    .darkGradient {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        width: 100%;
+        height: 60px;
+        background: linear-gradient(var(--primaryColor), black);
+
+        .text {
+            color: var(--primaryText);
+        }
+    }
+}

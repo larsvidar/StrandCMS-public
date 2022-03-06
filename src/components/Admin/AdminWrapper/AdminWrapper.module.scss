@@ -1,0 +1,9 @@
+@import '../../../styles/general.scss';
+
+.AdminWrapper {
+    display: flex;
+
+    .pageContent {
+        width: 1000px;
+    }
+}

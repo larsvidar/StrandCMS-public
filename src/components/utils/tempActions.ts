@@ -1,5 +1,5 @@
 import { isError } from "../../Handler/actions/actions";
-import { uploadeFile } from "../../Handler/FireBase/firebaseHandler";
+import { uploadedFile } from "../../Handler/crudder/firebaseHandler";
 
 
         
@@ -8,8 +8,8 @@ export const processFileForm = (data: FormData, isArticle: boolean) => {
     const file: any = data.get('image');
     if(file.size) {
         const fileResponse: any = isArticle
-            ? uploadeFile(file, 'article/' + file.name)
-            : uploadeFile(file, 'page/' + file.name);
+            ? uploadedFile(file, 'article/' + file.name)
+            : uploadedFile(file, 'page/' + file.name);
 
         if(isError(fileResponse)) {
             //setMessage('Error while saving file: ', fileResponse);

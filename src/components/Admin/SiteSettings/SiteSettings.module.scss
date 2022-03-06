@@ -1,0 +1,35 @@
+@import '../../../styles/general.scss';
+
+.SiteSettings {
+    padding: 2em;
+
+    h2 {
+        margin-bottom: .5em;
+    }
+
+    input[type='checkbox'] {
+        margin: 15px; 
+        transform: scale(2);
+    }
+
+    .mailButton {
+        text-align: center;
+        display: block;
+        width: 200px;
+        text-decoration: underline;
+        cursor: pointer;
+        padding: 10px 15px;
+        border-radius: 5px;
+        margin-bottom: 1em;
+        font-size: 1.2em;
+        background: #eee;
+        
+        &:hover {
+            background: #ddd;
+        }
+    }
+
+    form {
+        //From generales.ts
+    }
+}

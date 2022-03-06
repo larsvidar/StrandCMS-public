@@ -1,5 +1,5 @@
 /***** IMPORTS *****/
-import { ISettings } from "../interfaces/IState";
+import { ISettings } from '../interfaces/IState';
 
 
 /***** DEFAULT STATE-OBJECTS *****/
@@ -26,4 +26,4 @@ export const defaultSettings: ISettings = {
         text: 'This is an example of an mail-template.'  +
             'This text is sent from the "GetInfo"-form in StrandCMS.',
     },
-}
+};

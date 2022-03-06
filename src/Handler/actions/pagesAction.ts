@@ -1,14 +1,11 @@
 /***** IMPORTS *****/
-import { readFile, pagesObj } from "../FireBase/firebaseHandler";
-import { IArticle, genObject } from "../../interfaces/IGeneral";
-import { sortObjectArray, isError } from "./actions";
+import { readFile, pagesObj } from '../crudder/firebaseHandler';
+import { IArticle, genObject } from '../../interfaces/IGeneral';
+import { sortObjectArray, isError } from './actions';
 
 
 /***** FUNCTIONS *****/
-export const handleCreatePage = async (
-    formData: any, 
-    setPages: Function
-) => {
+export const handleCreatePage = async (formData: genObject, setPages: any) => {
 
     const newPage = await pagesObj.create(formData);
 
@@ -20,20 +17,20 @@ export const handleCreatePage = async (
     });
 
     return newPage;
-}
+};
 
 
 /**
  * Gets articles from server.
  * @param {Function} setArticles Function for setting gotten articles to state.
- * @param {boolean} getAll Get also unpublished articles (must be athenticated).
+ * @param {boolean} getAll Get also unpublished articles (must be authenticated).
  */
 export const readPages = async (
     query?: genObject, 
 ) => {
 
     //Get articles from Server.
-    const pagesArray: Array<genObject> = await pagesObj.read(query);
+    const pagesArray = await pagesObj.read(query);
     //Check for errors.
     if(isError(pagesArray)) return pagesArray;
     
@@ -41,17 +38,16 @@ export const readPages = async (
     const sortedPages = sortObjectArray(pagesArray, 'created', 'desc');
 
     //Getting images from Server, if any.
-    for(let page of sortedPages) {
+    for(const page of sortedPages) {
 
         //Check if article has any images...
         if(page.image && page.image.length) {
             //...if so, get imageUrl from server.
-            let imageError = '';
             const fetchedImage = await readFile(page.image)
-                .catch((error: any) => imageError = error.message);
+                .catch((error) => error);
 
             //If there was an error getting image url, then return empty value.
-            page.image = imageError ? '' : fetchedImage;
+            page.image = isError(fetchedImage) ? '' : fetchedImage;
             
         }
     }
@@ -59,7 +55,7 @@ export const readPages = async (
     //Set articles to state, then return them.
     //setArticles(sortedArticles);
     return sortedPages;
-}
+};
 
 
 /**
@@ -68,16 +64,16 @@ export const readPages = async (
  * @param {genObject} data Data to update.
  * @param {Function} setArticles Function to update articles in state.
  * @return {Promise<boolean | Error> } Promise that resolves to true if update was
- *  - sucsessful, Error-object if not. 
+ *  - successful, Error-object if not. 
  */
 export const updatePage = async (
-    pageId: string, data: genObject, setPages: Function
+    pageId: string, data: genObject, setPages: any
 ): Promise<boolean | Error> => {
 
     //Updates article.
     const pageResponse = await pagesObj.update(pageId, data, true);
     
-    //If update was succsessful, update article in state.
+    //If update was successful, update article in state.
     if(pageResponse) {
         setPages((prevArticles: Array<genObject>) => {
             return prevArticles.map((page: genObject) => {
@@ -85,13 +81,13 @@ export const updatePage = async (
                     return {...page, ...data};
                 }
                 return page;
-            })
-        })
+            });
+        });
     }
 
     //Return response.
     return pageResponse;
-}
+};
 
 
 /**
@@ -99,16 +95,16 @@ export const updatePage = async (
  * @param articleId 
  * @param setArticles 
  */
-export const handleDeletePage = async (articleId: string, setArticles: Function) => {
+export const handleDeletePage = async (articleId: string, setArticles: any) => {
     const deleteResponse = await pagesObj.delete(articleId);
-    console.log(deleteResponse)
+
     if(deleteResponse) {
         setArticles((prevArticles: Array<genObject>) => {
             return prevArticles.filter((article: genObject) => {
                 return article.id !== articleId;
             });
-        })
+        });
     }
 
     return deleteResponse;
-}
+};

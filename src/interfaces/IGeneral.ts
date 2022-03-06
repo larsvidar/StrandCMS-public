@@ -17,7 +17,10 @@ export interface IArticle {
     caption: string,
     slug: string,
     created: string,
-};
+    contact?: TContact,
+}
+
+export type TContact = 'contact' | 'member' | 'info' | 'none';
 
 export interface IHistory {
     history: any,
@@ -26,6 +29,8 @@ export interface IHistory {
 }
 
 export interface IBaseProps {
-    className?: any,
+    className?: string,
     onClick?: any,
+    onChange?: any,
+    onSubmit?: any,
 }
