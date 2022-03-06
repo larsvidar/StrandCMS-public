@@ -2,9 +2,9 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { getToken } from '../Handler/FireBase/firebaseHandler';
-import { isError } from 'util';
 import { genObject } from '../interfaces/IGeneral';
 import ContactForm from '../components/utils/ContactForm/ContactForm';
+import {isError} from '../Handler/actions/actions';
 
 
 /***** STYLES *****/
@@ -87,7 +87,7 @@ const Test = (props: ITestProps) => {
                     method: 'POST',
                     mode: 'cors',
                     headers: {
-                        Authorization: 'Bearer ' + token,//AIzaSyACR72mAGxRYkw5wCXsv_75_DP4hBV34k4',
+                        Authorization: 'Bearer ' + token,
                         'content-type': 'application/json',
                     },
                     body: JSON.stringify({
@@ -117,7 +117,7 @@ const Test = (props: ITestProps) => {
 
                 <ContactForm mode='info' test={true} />
 
-            {/* Place component to test abow this line */}
+            {/* Place component to test above this line */}
         </TestStyles>
     );
 }
