@@ -2,6 +2,8 @@
 A simple CMS made with Create React App and Firebase
 
 
+A working version of the app is running on [larsvidar.no/strandcms](https://larsvidar.no/strandcms);
+
 ## Usage
 
 In the project directory, you can run:
