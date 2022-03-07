@@ -1,4 +1,11 @@
-ErrorDocument 404 /index.html
+ErrorDocument 404 /strandcms/index.html
+
+    RewriteBase /strandcms/
+    RewriteRule ^index\.html$ - [L]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-l
+    RewriteRule ^.*strandcms/.* /strandcms/index.html [L]
 
 ## Cache-Control
 # One year for image files
