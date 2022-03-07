@@ -1,7 +1,7 @@
 import React from 'react';
 import {render, unmountComponentAtNode} from 'react-dom';
 import Public from './Public';
-import {BrowserRouter, Route} from 'react-router-dom';
+import {BrowserRouter, Route, Routes} from 'react-router-dom';
 
 let container: any = null;
 
@@ -20,6 +20,6 @@ afterEach(() => {
 
 it('Renders Public without crashing', () => {
     render(<BrowserRouter>
-        <Route render={() => <Public />} />
+        <Routes><Route ><Public /></Route></Routes>
     </BrowserRouter>, container);
 });

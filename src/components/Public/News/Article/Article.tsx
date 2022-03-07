@@ -4,7 +4,6 @@ import {IArticle, IHistory} from '../../../../interfaces/IGeneral';
 import {formatDate} from '../../../../Handler/actions/actions';
 import ShowLoader from '../../../utils/ShowLoader/ShowLoader';
 import {AppContext} from '../../../../Handler/Handler';
-import {withRouter} from 'react-router-dom';
 import styles from './Article.module.scss';
 import ContactForm from '../../../utils/ContactForm/ContactForm';
 import {setTheme} from '../../../../Handler/actions/sActions';
@@ -87,4 +86,4 @@ const Article = ({match}: IHistory) => {
 
 
 /***** EXPORTS *****/
-export default withRouter(Article);
+export default Article;

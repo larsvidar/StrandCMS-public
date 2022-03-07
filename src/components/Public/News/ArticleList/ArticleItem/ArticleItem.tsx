@@ -4,7 +4,7 @@ import styles from './ArticleItem.module.scss';
 import { genObject, IBaseProps } from '../../../../../interfaces/IGeneral';
 import { formatDate } from '../../../../../Handler/actions/actions';
 import {Link} from 'react-router-dom';
-import {ResponsiveEmbed} from 'react-bootstrap';
+import {Ratio} from 'react-bootstrap';
 
 
 /***** INTERFACES *****/
@@ -54,7 +54,7 @@ const ArticleItem = ({article, className}: IArticleItemProps) => {
     return(
         <div className={articleItemClass} >
             <Link to={`/news/${article.slug}`}>
-                <ResponsiveEmbed aspectRatio="16by9">
+				<Ratio aspectRatio='16x9'>
                     {thumbnail.file
                         ?   <img
                                 className={styles.thumbnail}
@@ -63,7 +63,7 @@ const ArticleItem = ({article, className}: IArticleItemProps) => {
                             />
                         :   <div className={styles.thumbnail} />
                     }
-                </ResponsiveEmbed>
+				</Ratio>
             </Link>
             <div className={styles.frontArticle}>
                 <div>

@@ -1,6 +1,6 @@
 /***** IMPORTS *****/
 import React from 'react';
-import {Route, BrowserRouter} from 'react-router-dom';
+import {Route, BrowserRouter, Routes} from 'react-router-dom';
 import AdminPage from './components/Admin/Admin';
 import AdminProvider from './components/Admin/AdminWrapper/AdminProvider';
 import Authorize from './components/Admin/Authorize/Authorize';
@@ -22,55 +22,34 @@ const App: React.FC = () => {
   /*** Return-statement ***/
   return (
     <BrowserRouter>
-      <Main>
-        {/* Test (only available in development-mode) */}
-        {isDevelopment && 
-          <Route 
-            path='/test/'
-            exact
-            component={Test}
-          />
-        }
-        
-        {/* Public-content */}
-        <Route 
-          path={'/'}
-          exact
-          render={() => <Public />}
-        />
+		<Main>
+			<Routes>
+				{/* Test (only available in development-mode) */}
+				{isDevelopment &&
+					<Route path='/test/' element={<Test />} />
+				}
+				
+				{/* Public-content */}
+				<Route path='/' element={<Public />} />
 
-        {/* News */}
-        <Route 
-          path={'/news'} 
-          exact
-          render={() => <ArticleList />} 
-        />
+				{/* News */}
+				<Route path={'/news'} element={<ArticleList /> } />
 
-        <Route 
-          path={'/news/:article'} 
-          exact
-          render={() => <DisplayModule />} 
-        />
+				<Route path={'/news/:article'} element={<DisplayModule />} />
 
-        {/* Login */}
-        <Route 
-          path={'/login'} 
-          exact
-          render={() => <Login />} 
-        />
+				{/* Login */}
+				<Route path={'/login'} element={<Login />} />
 
-        {/* Admin-panel */}
-        <Route 
-          path='/admin' 
-          render={() =>
-              <AdminProvider>
-                  <Authorize> 
-                      <AdminPage />
-                  </Authorize>
-              </AdminProvider>
-          } 
-        />
-      </Main>
+				{/* Admin-panel */}
+				<Route path='/admin' element={
+					<AdminProvider>
+						<Authorize> 
+							<AdminPage />
+						</Authorize>
+					</AdminProvider>
+				} />
+			</Routes>
+		</Main>
     </BrowserRouter>
   );
 };

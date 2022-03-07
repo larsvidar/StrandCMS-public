@@ -1,28 +1,28 @@
 /***** IMPORTS *****/
 import React, {SyntheticEvent, useContext, useEffect} from 'react';
 import styles from './Login.module.scss';
-import {withRouter} from 'react-router-dom';
 import {AppContext} from '../../Handler/Handler';
-import {IHistory} from '../../interfaces/IGeneral';
 import {isError} from '../../Handler/actions/actions';
 import {fireLogin} from '../../Handler/crudder/crudderHandler';
+import {useNavigate} from 'react-router-dom';
 
 
 /***** COMPONENT-FUNCTION *****/
-const Login = ({history}: IHistory) => {
+const Login = () => {
 
     /*** Context ***/
     const context = useContext(AppContext);
     const {state, actions} = context || {};
     const {isLoggedIn} = state || {};
     const {setMessage, setShowLoader} = actions || {}; 
+	const navigate = useNavigate();
 
 
     /*** Effects ***/
 
     //If user is logged in, redirect to admin-page.
     useEffect(() => {
-        if(isLoggedIn) history.push('/admin/');
+        if(isLoggedIn) navigate('/admin/');
     }, [isLoggedIn]);
 
 
@@ -55,7 +55,7 @@ const Login = ({history}: IHistory) => {
         //...else set isLoggedIn to true, and send user to admin-pages.
         } else {
             setShowLoader(false);
-            history.push('/admin/');
+            navigate('/admin/');
         }
 
         setShowLoader(false);
@@ -85,4 +85,4 @@ const Login = ({history}: IHistory) => {
 
 
 /***** EXPORTS *****/
-export default withRouter(Login);
+export default Login;

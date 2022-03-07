@@ -1,17 +1,13 @@
 /***** IMPORTS *****/
 import React, {useContext} from 'react';
-import {IArticle, IHistory, IBaseProps} from '../../../../interfaces/IGeneral';
-import {Link, withRouter} from 'react-router-dom';
+import {IArticle, IBaseProps} from '../../../../interfaces/IGeneral';
+import {Link} from 'react-router-dom';
 import styles from './LastPosts.module.scss';
 import {AppContext} from '../../../../Handler/Handler';
 
 
-/***** INTERFACES *****/
-interface ILastPostsProps extends IHistory, IBaseProps {}
-
-
 /***** COMPONENT-FUNCTION *****/
-const LastPosts = ({className}: ILastPostsProps) => {
+const LastPosts = ({className}: IBaseProps) => {
 
     const context = useContext(AppContext);
     const {state} = context || {};
@@ -38,4 +34,4 @@ const LastPosts = ({className}: ILastPostsProps) => {
 
 
 /***** EXPORTS *****/
-export default withRouter(LastPosts);
+export default LastPosts;

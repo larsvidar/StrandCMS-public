@@ -5,14 +5,15 @@
     grid-template-columns: 3fr 4fr;
     grid-gap: 2em;
 
-    .thumbnail {
-        background: #eee;
-        border-radius: 8px;
-        overflow: hidden;
-        object-fit: cover;
-    }
+	.thumbnail {
+		background: #eee;
+		border-radius: 8px;
+		overflow: hidden;
+		object-fit: cover;
+	}
 
     .frontArticle {
+		margin-top: 1em;
         display: flex;
         flex-direction: column;
         justify-content: center;

@@ -3,11 +3,11 @@ import React, {useContext, useState, useEffect, useRef, SyntheticEvent} from 're
 import {isError, stringifyLink, sortObjectArray} from '../../../Handler/actions/actions';
 import {uploadedFile, articlesObj} from '../../../Handler/crudder/firebaseHandler';
 import {updatePage, handleCreatePage} from '../../../Handler/actions/pagesAction';
-import {IHistory, IArticle, genObject} from '../../../interfaces/IGeneral';
+import {IArticle, genObject} from '../../../interfaces/IGeneral';
 import {updateArticle} from '../../../Handler/actions/articlesActions';
 import {AdminContext} from '../AdminWrapper/AdminProvider';
 import Loader from '../../utils/ShowLoader/Loader/Loader';
-import {withRouter, Link} from 'react-router-dom';
+import {Link, useNavigate, useParams} from 'react-router-dom';
 import {AppContext} from '../../../Handler/Handler';
 import styles from './ItemEditor.module.scss';
 import {Editor} from '@tinymce/tinymce-react';
@@ -15,14 +15,14 @@ import {setTheme} from '../../../Handler/actions/sActions';
 
 
 /***** INTERFACES *****/
-interface IItemEditorProps extends IHistory {
+interface IItemEditorProps {
     editMode?: boolean,
     articleMode?: boolean,
 }
 
 
 /***** COMPONENT-FUNCTION *****/
-const ItemEditor = ({editMode = false, articleMode=true, match, history}: IItemEditorProps) => {
+const ItemEditor = ({editMode = false, articleMode=true}: IItemEditorProps) => {
 
     /*** Context ***/
     const context = useContext(AppContext);
@@ -55,6 +55,8 @@ const ItemEditor = ({editMode = false, articleMode=true, match, history}: IItemE
     const url = `${base.values.baseUrl}/${articleMode ? 'news' : 'page'}/${editItem.slug}`;
     const toUrl = `/${articleMode ? 'news' : 'page'}/${editItem.slug}`;
     const itemEditorRef = useRef(null);
+	const params = useParams();
+	const navigate = useNavigate();
 
 
     /*** Effects ***/
@@ -86,7 +88,7 @@ const ItemEditor = ({editMode = false, articleMode=true, match, history}: IItemE
             //If this is an article, check allArticles-state...
             if(articleMode) {
                 if(editMode && allArticles?.length) {
-                    const slug = match.params.article;
+                    const slug = params.article;
                     const slugArticle = allArticles.find((article) => {
                         return article.slug === slug;
                     });
@@ -100,7 +102,7 @@ const ItemEditor = ({editMode = false, articleMode=true, match, history}: IItemE
             //...else this is a page, so check allPages-state.
             } else {
                 if(editMode && allPages?.length) {
-                    const slug = match.params.page;
+                    const slug = params.page;
                     const slugPage = allPages.filter((page) => {
                         return page.slug === slug;
                     })[0];
@@ -270,7 +272,7 @@ const ItemEditor = ({editMode = false, articleMode=true, match, history}: IItemE
                 target.reset();
             }
 
-            history.push(articleMode ? '/admin/article-list/' : '/admin/pages-list/');
+            navigate(articleMode ? '/admin/article-list/' : '/admin/pages-list/');
         }
     };
 
@@ -481,4 +483,4 @@ const ItemEditor = ({editMode = false, articleMode=true, match, history}: IItemE
 
 
 /***** EXPORTS *****/
-export default withRouter(ItemEditor);
+export default ItemEditor;

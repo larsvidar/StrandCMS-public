@@ -1,8 +1,7 @@
 /***** IMPORTS  *****/
-import 'firebase/auth';
-import 'firebase/storage';
-import 'firebase/firestore';
-import firebase from 'firebase/app';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
 import {isError, removeEmpty, removeUndefined, isEmpty, sortObjectArray} from '../actions/actions';
 import {genObject} from '../../interfaces/IGeneral';
 import config from '../../config.json';
@@ -38,11 +37,11 @@ const database = firebase.firestore();
 export const getToken = () => {
 
     const token = new Promise((resolve) => {
-        firebase.auth().onAuthStateChanged((user) => {
+        firebase.auth().onAuthStateChanged((user: any) => {
             if(!user) return resolve(new Error('Bruker er ikke innlogget...'));
             if(isError(user)) return resolve(new Error('Feil ved brukerautentisering: ' + user.message));
 
-            user.getIdToken().then((token) => resolve(token));
+            user.getIdToken().then((token: any) => resolve(token));
            
         });
     });
@@ -440,7 +439,7 @@ export const loginAction = async (
 ): Promise<Promise<firebase.auth.UserCredential> | Error> => {
     const login = await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
         .then(() => firebase.auth().signInWithEmailAndPassword(username, password))
-        .catch((error) => error);
+        .catch((error: Error) => error);
 
     return login;
 };
@@ -453,7 +452,7 @@ export const loginAction = async (
  */
 export const checkLoginAction = async (setIsLoggedIn: any): Promise<boolean> => {
     const result: Promise<boolean> = new Promise((resolve, reject) => {
-        firebase.auth().onAuthStateChanged((user) => {
+        firebase.auth().onAuthStateChanged((user: any) => {
             if(user) {
                 setIsLoggedIn(true);
                 resolve(true);
@@ -476,7 +475,7 @@ export const checkLoginAction = async (setIsLoggedIn: any): Promise<boolean> => 
  */
 export const logoutAction = async (): Promise<void> => {
     await firebase.auth().signOut()
-        .catch((error) => console.log('Du ble ikke logget ut: ', error.message));
+        .catch((error: Error) => console.log('Du ble ikke logget ut: ', error.message));
 };
 
 
@@ -507,7 +506,7 @@ export const readFile = async (filePath: string) => {
     const storage = firebase.storage();
     const imageRef = storage.ref(filePath);
     const imagePath = imageRef.getDownloadURL();
-    imagePath.catch((error) => error);
+    imagePath.catch((error: Error) => error);
 
     return isError(imagePath) ? '' : imagePath;
 };

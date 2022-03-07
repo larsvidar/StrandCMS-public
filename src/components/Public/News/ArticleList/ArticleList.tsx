@@ -3,7 +3,7 @@ import React, {FC, useContext} from 'react';
 import styles from './ArticleList.module.scss';
 import ArticleItem from './ArticleItem/ArticleItem';
 import {IArticle} from '../../../../interfaces/IGeneral';
-import { AppContext } from '../../../../Handler/Handler';
+import {AppContext} from '../../../../Handler/Handler';
 
 
 /***** COMPONENT-FUNCTION *****/

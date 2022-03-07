@@ -4,24 +4,26 @@ import {checkLogin} from '../../../Handler/actions/authActions';
 import {AppContext} from '../../../Handler/Handler';
 import AdminWrapper from '../AdminWrapper/AdminWrapper';
 import styles from './Authorize.module.scss';
-import {Link, withRouter} from 'react-router-dom';
-import { IHistory } from '../../../interfaces/IGeneral';
+import {Link, useNavigate} from 'react-router-dom';
 
 
 /***** INTERFACES *****/
-interface IAuthorizeProps extends IHistory {
+interface IAuthorizeProps {
     children: any,
 }
 
 
 /***** COMPONENT-FUNCTION *****/
-const Authorize = ({children, history}: IAuthorizeProps) => {
+const Authorize = ({children}: IAuthorizeProps) => {
 
     /*** Context ***/
     const context = useContext(AppContext);
     const {state, actions} = context || {};
     const {isLoggedIn} = state || {};
     const {setIsLoggedIn, setShowLoader} = actions || {};
+
+	/*** Variables ***/
+	const navigate = useNavigate();
 
 
 
@@ -34,7 +36,7 @@ const Authorize = ({children, history}: IAuthorizeProps) => {
                 if(!response) {
                     console.log('Not logged in...');
                     setShowLoader(false);
-                    history.push('/login/');
+                    navigate('/login/');
                 } else {
                     setIsLoggedIn(true);
                 }
@@ -70,4 +72,4 @@ const Authorize = ({children, history}: IAuthorizeProps) => {
 
 
 /***** EXPORTS *****/
-export default withRouter(Authorize);
+export default Authorize;

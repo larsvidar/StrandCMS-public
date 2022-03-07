@@ -1,6 +1,6 @@
 /***** IMPORTS *****/
 import React, {FC} from 'react';
-import {Route} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import Page from './Pages/Page';
 import FrontPage from './FrontPage/FrontPage';
 
@@ -9,25 +9,17 @@ import FrontPage from './FrontPage/FrontPage';
 const PublicSite: FC = () => {
     
     /*** Return-statement ***/
-    return <>
+    return(
+		<Routes>
 
-        {/* FrontPage */}
-        <Route 
-            path={'/'} 
-            exact
-            render={() => <FrontPage />} 
-        />
+			{/* FrontPage */}
+			<Route path={'/'} element={<FrontPage />} />
 
 
-        {/* Pages */}
-        <Route 
-            path={'/page/:page'} 
-            exact
-            render={() => <>
-                <Page />
-            </>} 
-        />
-    </>;
+			{/* Pages */}
+			<Route path={'/page/:page'} element={<Page />} />
+		</Routes>
+	);
 };
 
 

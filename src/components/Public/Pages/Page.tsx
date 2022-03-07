@@ -2,9 +2,9 @@
 import React, {useEffect, useState, useContext} from 'react';
 import {IHistory, genObject} from '../../../interfaces/IGeneral';
 import {AppContext} from '../../../Handler/Handler';
-import {withRouter} from 'react-router-dom';
 import styled from 'styled-components';
 import ContactForm from '../../utils/ContactForm/ContactForm';
+import {useMatch, useParams} from 'react-router-dom';
 
 
 /***** STYLES *****/
@@ -54,7 +54,7 @@ const PageStyles = styled.div`
 
 
 /***** COMPONENT-FUNCTION *****/
-const Page = ({match}: IHistory) => {
+const Page = () => {
 
     /*** Context ***/
     const context = useContext(AppContext);
@@ -62,18 +62,19 @@ const Page = ({match}: IHistory) => {
     const {pages, settings} = state || {};
     const {theme} = settings || {};
     const {linkColor, linkUnderline} = theme || {};
+	const urlParams = useParams();
     
 
     /*** State ***/
     const [page, setPage] = useState<genObject>({});
     const [thisHtml, setThisHtml] = useState({__html: ''});
-    const [slug, setSlug] = useState<string>(match.params.page);
+    const [slug, setSlug] = useState<string>(urlParams.page || '');
 
 
     /*** Effects ***/
     useEffect(() => {
-        if(match.params.page) setSlug(match.params.page);
-    }, [match.params.page]);
+        if(urlParams.page) setSlug(urlParams.page);
+    }, [urlParams.page]);
 
 
     useEffect(() => {
@@ -109,4 +110,4 @@ const Page = ({match}: IHistory) => {
 
 
 /***** EXPORTS *****/
-export default withRouter(Page);
+export default Page;

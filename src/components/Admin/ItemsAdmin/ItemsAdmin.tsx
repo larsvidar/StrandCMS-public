@@ -1,25 +1,25 @@
 /***** IMPORTS *****/
 import React, {SyntheticEvent, useContext, useEffect, useRef, useState} from 'react';
 import {updateArticle, handleDeleteArticle} from '../../../Handler/actions/articlesActions';
-import {genObject, IArticle, IHistory} from '../../../interfaces/IGeneral';
+import {genObject, IArticle} from '../../../interfaces/IGeneral';
 import {handleDeletePage} from '../../../Handler/actions/pagesAction';
 import {isError, formatDate} from '../../../Handler/actions/actions';
 import {AdminContext} from '../AdminWrapper/AdminProvider';
 import KebabMenu from '../../utils/KebabMenu/KebabMenu';
 import {AppContext} from '../../../Handler/Handler';
-import {withRouter, Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import styles from './ItemsAdmin.module.scss';
 import {setTheme} from '../../../Handler/actions/sActions';
 
 
 /***** INTERFACES *****/
-interface IItemsAdminProps extends IHistory {
+interface IItemsAdminProps {
     articleMode?: boolean,
 }
 
 
 /***** COMPONENT-FUNCTION *****/
-const ItemsAdmin = ({articleMode=true, history}: IItemsAdminProps) => {
+const ItemsAdmin = ({articleMode = true}: IItemsAdminProps) => {
 
     /*** Variables ***/
     const actionMenu: Array<string> = articleMode
@@ -34,6 +34,7 @@ const ItemsAdmin = ({articleMode=true, history}: IItemsAdminProps) => {
                 'Slett',
             ];
     const itemsAdminRef = useRef(null);
+	const navigate = useNavigate();
 
     /*** Context ***/
     const context = useContext(AppContext);
@@ -136,7 +137,7 @@ const ItemsAdmin = ({articleMode=true, history}: IItemsAdminProps) => {
      * @return {void}
      */
     const editArticle = (selectedArticles: IArticle[]) => {
-        history.push('edit-article/' + selectedArticles[0].slug);
+        navigate('edit-article/' + selectedArticles[0].slug);
     };
 
 
@@ -215,7 +216,7 @@ const ItemsAdmin = ({articleMode=true, history}: IItemsAdminProps) => {
      * @param {Array<genObject>} selectedPages Array of selected pages. Only opens first item in array for edit.
      */
     const editPage = (selectedPages: genObject[]) => {
-        history.push('edit-page/' + selectedPages[0].slug);
+        navigate('edit-page/' + selectedPages[0].slug);
     };
 
     
@@ -395,4 +396,4 @@ const ItemsAdmin = ({articleMode=true, history}: IItemsAdminProps) => {
 
 
 /***** EXPORTS *****/
-export default withRouter(ItemsAdmin);
+export default ItemsAdmin;

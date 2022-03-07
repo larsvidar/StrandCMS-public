@@ -1,13 +1,12 @@
 /***** IMPORTS *****/
 import React from 'react';
 import styles from './AdminPage.module.scss';
-import {Link, withRouter} from 'react-router-dom';
-import {IHistory} from '../../../interfaces/IGeneral';
+import {Link} from 'react-router-dom';
 import {logout} from '../../../Handler/actions/authActions';
 
 
 /***** COMPONENT-FUNCTION *****/
-const Admin = ({history}: IHistory) => {
+const Admin = () => {
 
 
     /*** Return-statement ***/
@@ -44,4 +43,4 @@ const Admin = ({history}: IHistory) => {
 
 
 /***** EXPORTS *****/
-export default withRouter(Admin);
+export default Admin;

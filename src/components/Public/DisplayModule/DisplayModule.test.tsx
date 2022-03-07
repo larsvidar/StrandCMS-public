@@ -1,7 +1,7 @@
 import React from 'react';
 import {render, unmountComponentAtNode} from 'react-dom';
 import DisplayModule from './DisplayModule';
-import {BrowserRouter, Route} from 'react-router-dom';
+import {BrowserRouter, Route, Routes} from 'react-router-dom';
 
 let container: any = null;
 
@@ -20,6 +20,6 @@ afterEach(() => {
 
 it('Renders DisplayModule without crashing', () => {
     render(<BrowserRouter>
-        <Route render={() => <DisplayModule />} />
+        <Routes><Route><DisplayModule /></Route></Routes>
     </BrowserRouter>, container);
 });

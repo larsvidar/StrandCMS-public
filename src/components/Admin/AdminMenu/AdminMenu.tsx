@@ -1,15 +1,14 @@
 /***** IMPORTS *****/
 import React, {useContext, useEffect, useRef} from 'react';
 import styles from './AdminMenu.module.scss';
-import {Link, withRouter} from 'react-router-dom';
-import {IHistory} from '../../../interfaces/IGeneral';
+import {Link} from 'react-router-dom';
 import {AppContext} from '../../../Handler/Handler';
 import {logout} from '../../../Handler/actions/authActions';
 import {setTheme} from '../../../Handler/actions/sActions';
 
 
 /***** COMPONENT-FUNCTION *****/
-const AdminMenu = ({history}: IHistory) => {
+const AdminMenu = () => {
 
     /*** Context ***/
     const context = useContext(AppContext);
@@ -52,4 +51,4 @@ const AdminMenu = ({history}: IHistory) => {
 
 
 /***** EXPORTS *****/
-export default withRouter(AdminMenu);
+export default AdminMenu;
