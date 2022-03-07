@@ -21,7 +21,7 @@ const App: React.FC = () => {
 
   /*** Return-statement ***/
   return (
-    <BrowserRouter>
+    <BrowserRouter basename='/strandcms'>
 		<Main>
 			<Routes>
 				{/* Test (only available in development-mode) */}
